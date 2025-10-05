@@ -19,7 +19,7 @@ export default function Standings() {
   console.log('🏆 Standings component rendering...');
   
   const currentYear = new Date().getFullYear();
-  const [selectedLeague, setSelectedLeague] = useState<number>(103); // AL by default
+  const [selectedLeague] = useState<number>(103); // AL by default
   const [selectedSeason, setSelectedSeason] = useState<number>(2024); // Default to 2024 since we know it has data
 
   console.log('📊 Standings params:', { selectedLeague, selectedSeason });
@@ -29,15 +29,14 @@ export default function Standings() {
   
   const { data, isLoading, error } = useQuery({
     queryKey: ['standings', selectedLeague, selectedSeason],
-    queryFn: () => {
-      console.log('🔄 Fetching standings data...');
-      return getStandings(selectedLeague, selectedSeason);
-    },
-    onSuccess: (data) => {
-      console.log('✅ Standings data loaded successfully:', data);
-    },
-    onError: (error) => {
-      console.error('❌ Standings data fetch failed:', error);
+    queryFn: async () => {
+      try {
+        console.log('🔄 Fetching standings data...');
+        return await getStandings(selectedLeague, selectedSeason);
+      } catch (error) {
+        console.error('❌ Standings data fetch failed:', error);
+        throw error; // Ensure the error propagates to the `useQuery` error state
+      }
     }
   });
 
