@@ -6,65 +6,38 @@ type ViewMode = 'simple' | 'advanced';
 type StatType = 'hitting' | 'pitching';
 
 export default function TeamStats() {
-  console.log('⚾ TeamStats component rendering...');
-  
   const [viewMode, setViewMode] = useState<ViewMode>('simple');
   const [statType, setStatType] = useState<StatType>('hitting');
   const [selectedSeason, setSelectedSeason] = useState(2025);
-
-  console.log('📊 TeamStats params:', { viewMode, statType, selectedSeason });
 
   // Fetch hitting stats
   const { data: hittingData = {}, isLoading: hittingLoading, error: hittingError } = useQuery({
     queryKey: ['teamHittingStats', selectedSeason],
     queryFn: () => {
-      console.log('🔄 Fetching team hitting stats...');
       return getTeamHittingStats(selectedSeason, 'R', 'homeRuns', 'desc', 30);
     },
-    enabled: statType === 'hitting',
-    onSuccess: (data) => {
-      console.log('✅ Team hitting data loaded:', data);
-    },
-    onError: (error) => {
-      console.error('❌ Team hitting data fetch failed:', error);
-    }
+    enabled: statType === 'hitting'
   });
 
   // Fetch pitching stats
   const { data: pitchingData = {}, isLoading: pitchingLoading, error: pitchingError } = useQuery({
     queryKey: ['teamPitchingStats', selectedSeason],
     queryFn: () => {
-      console.log('🔄 Fetching team pitching stats...');
       return getTeamPitchingStats(selectedSeason, 'R', 'earnedRunAverage', 'asc', 30);
     },
-    enabled: statType === 'pitching',
-    onSuccess: (data) => {
-      console.log('✅ Team pitching data loaded:', data);
-    },
-    onError: (error) => {
-      console.error('❌ Team pitching data fetch failed:', error);
-    }
+    enabled: statType === 'pitching'
   });
 
   const isLoading = statType === 'hitting' ? hittingLoading : pitchingLoading;
   const error = statType === 'hitting' ? hittingError : pitchingError;
   const data = statType === 'hitting' ? (hittingData as { stats?: TeamStat[] }) : (pitchingData as { stats?: TeamStat[] });
 
-  console.log('📈 TeamStats query state:', { 
-    isLoading, 
-    error: error?.message, 
-    dataLength: data?.stats?.length,
-    statType 
-  });
-
   // Get leaders from the data
   const getLeaders = () => {
     if (!data?.stats?.length) {
-      console.warn('⚠️ No team stats data for leaders calculation');
       return [];
     }
     
-    console.log('🏆 Calculating leaders from', data.stats.length, 'teams');
     const stats = data.stats;
     
     if (statType === 'hitting') {
@@ -125,12 +98,10 @@ export default function TeamStats() {
   const availableSeasons = [2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016];
 
   if (isLoading) {
-    console.log('⏳ Showing TeamStats loading state');
     return <div className="text-center p-8">Loading team statistics...</div>;
   }
   
   if (error) {
-    console.error('💥 Showing TeamStats error state:', error);
     return (
       <div className="text-center p-8">
         <div className="text-red-500 mb-4">❌ Error loading team stats</div>
@@ -140,8 +111,6 @@ export default function TeamStats() {
       </div>
     );
   }
-
-  console.log('🎯 Rendering TeamStats with data');
 
   return (
     <div className="space-y-6">
