@@ -67,16 +67,16 @@ function App() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       {/* Header */}
       <header className="bg-white shadow-lg border-b-4 border-blue-600">
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
             <div className="flex items-center space-x-3">
-              <div className="text-4xl">⚾</div>
+              <div className="text-3xl sm:text-4xl">⚾</div>
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">MLB Stats Central</h1>
-                <p className="text-gray-600">Real-time baseball statistics and analytics</p>
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">MLB Stats Central</h1>
+                <p className="text-sm sm:text-base text-gray-600">Real-time baseball statistics and analytics</p>
               </div>
             </div>
-            <div className="hidden md:flex items-center space-x-4 text-sm text-gray-600">
+            <div className="hidden lg:flex items-center space-x-4 text-sm text-gray-600">
               <span>Data from official MLB APIs</span>
               <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Live 2025</span>
             </div>
@@ -86,8 +86,8 @@ function App() {
 
       {/* Navigation Tabs */}
       <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex space-x-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex space-x-4 sm:space-x-8 overflow-x-auto">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
@@ -95,14 +95,14 @@ function App() {
                   console.log('🔄 Tab clicked:', tab.id);
                   setActiveTab(tab.id);
                 }}
-                className={`flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                className={`flex items-center space-x-2 py-4 px-2 sm:px-1 border-b-2 font-medium text-sm whitespace-nowrap transition-colors ${
                   activeTab === tab.id
                     ? 'border-blue-500 text-blue-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
-                <span className="text-lg">{tab.icon}</span>
-                <span>{tab.label}</span>
+                <span className="text-base sm:text-lg">{tab.icon}</span>
+                <span className="text-xs sm:text-sm">{tab.label}</span>
               </button>
             ))}
           </div>
@@ -110,14 +110,14 @@ function App() {
       </nav>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {renderContent()}
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-white py-8 mt-16">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <p className="text-gray-300">
+      <footer className="bg-gray-800 text-white py-6 sm:py-8 mt-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-sm sm:text-base text-gray-300">
             Built with React + TypeScript • Data from official MLB APIs • 
             <span className="text-blue-400 ml-1">Real-time updates</span>
           </p>

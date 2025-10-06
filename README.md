@@ -1,5 +1,7 @@
 # MLB Stats Dashboard
 
+🚀 **[Live Demo](https://mlb-stats-sooty.vercel.app/)** - Try the app now!
+
 A comprehensive Major League Baseball statistics dashboard built with React, TypeScript, and Vite. This application provides real-time access to MLB standings, team statistics, player performance data, and live scores.
 
 ## Features
